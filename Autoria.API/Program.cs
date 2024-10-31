@@ -6,7 +6,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AutoriaDbContext>(options => {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("AutoriaDbContext"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(AutoriaDbContext)));
 });
 
 var app = builder.Build();
