@@ -1,0 +1,17 @@
+version: '1.0'
+services:
+  postgres:
+    container_name: AutoriaPostgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: AutroriaDb
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - ../../data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  data:
