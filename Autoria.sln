@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoria.Infrastructure", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoria.Core", "Autoria.Core\Autoria.Core.csproj", "{7B85FDE8-A7AC-473E-8046-95DAC241A4CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autoria.BLL", "Autoria.BLL\Autoria.BLL.csproj", "{60861990-88E9-487B-8C08-7B97B4114C02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7B85FDE8-A7AC-473E-8046-95DAC241A4CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B85FDE8-A7AC-473E-8046-95DAC241A4CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B85FDE8-A7AC-473E-8046-95DAC241A4CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60861990-88E9-487B-8C08-7B97B4114C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60861990-88E9-487B-8C08-7B97B4114C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60861990-88E9-487B-8C08-7B97B4114C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60861990-88E9-487B-8C08-7B97B4114C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

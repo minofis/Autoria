@@ -11,8 +11,7 @@ namespace Autoria.Infrastructure.Data.Configurations
             builder
                 .HasOne(c => c.Buyer)
                 .WithOne(b => b.Cart)
-                .HasForeignKey<Buyer>(b => b.CartId)
-                .IsRequired();
+                .HasForeignKey<Buyer>(b => b.CartId);
         }
     }
 }

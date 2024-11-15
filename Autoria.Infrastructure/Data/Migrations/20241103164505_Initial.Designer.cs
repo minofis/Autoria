@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Autoria.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AutoriaDbContext))]
-    [Migration("20241031145555_Initial")]
+    [Migration("20241103164505_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -58,9 +58,6 @@ namespace Autoria.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId")
-                        .IsUnique();
-
                     b.ToTable("Buyers");
                 });
 
@@ -76,6 +73,9 @@ namespace Autoria.Infrastructure.Data.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuyerId")
+                        .IsUnique();
 
                     b.ToTable("Carts");
                 });
@@ -95,15 +95,6 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.Property<int?>("CartId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("character varying(21)");
-
                     b.Property<int>("EngineCapacity")
                         .HasColumnType("integer");
 
@@ -114,6 +105,15 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("VehicleType")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("character varying(21)");
+
                     b.Property<int>("Year")
                         .HasColumnType("integer");
 
@@ -121,9 +121,9 @@ namespace Autoria.Infrastructure.Data.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicles");
 
-                    b.HasDiscriminator().HasValue("Vehicle");
+                    b.HasDiscriminator<string>("VehicleType").HasValue("Vehicle");
 
                     b.UseTphMappingStrategy();
                 });
@@ -146,7 +146,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("Autoria.Core.Entities.Vehicle");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -163,15 +163,15 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.HasDiscriminator().HasValue("UsedCar");
                 });
 
-            modelBuilder.Entity("Autoria.Core.Entities.Buyer", b =>
+            modelBuilder.Entity("Autoria.Core.Entities.Cart", b =>
                 {
-                    b.HasOne("Autoria.Core.Entities.Cart", "Cart")
-                        .WithOne("Buyer")
-                        .HasForeignKey("Autoria.Core.Entities.Buyer", "CartId")
+                    b.HasOne("Autoria.Core.Entities.Buyer", "Buyer")
+                        .WithOne("Cart")
+                        .HasForeignKey("Autoria.Core.Entities.Cart", "BuyerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cart");
+                    b.Navigation("Buyer");
                 });
 
             modelBuilder.Entity("Autoria.Core.Entities.Vehicle", b =>
@@ -181,11 +181,14 @@ namespace Autoria.Infrastructure.Data.Migrations
                         .HasForeignKey("CartId");
                 });
 
+            modelBuilder.Entity("Autoria.Core.Entities.Buyer", b =>
+                {
+                    b.Navigation("Cart")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Autoria.Core.Entities.Cart", b =>
                 {
-                    b.Navigation("Buyer")
-                        .IsRequired();
-
                     b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618

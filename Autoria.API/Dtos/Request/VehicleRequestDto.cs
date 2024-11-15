@@ -1,6 +1,9 @@
-namespace Autoria.Core.Entities
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+
+namespace Autoria.API.Dtos.Request
 {
-    public class Vehicle : BaseEntity
+    public class VehicleRequestDto
     {
         public string Type { get; set; } = string.Empty;
         public string Brand { get; set; } = string.Empty;
@@ -8,5 +11,6 @@ namespace Autoria.Core.Entities
         public int Year { get; set; }
         public int EngineCapacity { get; set; }
         public decimal Price { get; set; }
+        public int? Mileage { get; set; }
     }
 }
