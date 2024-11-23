@@ -9,9 +9,9 @@ namespace Autoria.Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Buyer> builder)
         {
             builder
-                .HasOne(b => b.Cart)
+                .HasOne(b => b.FavoritesList)
                 .WithOne(c => c.Buyer)
-                .HasForeignKey<Cart>(c => c.BuyerId);
+                .HasForeignKey<FavoritesList>(c => c.BuyerId);
         }
     }
 }

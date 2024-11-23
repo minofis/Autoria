@@ -9,12 +9,12 @@ namespace Autoria.Infrastructure.Data
         public AutoriaDbContext(DbContextOptions<AutoriaDbContext> options) : base(options){}
 
         public DbSet<Buyer> Buyers { get; set; }
-        public DbSet<Cart> Carts { get; set; }
+        public DbSet<FavoritesList> FavoritesLists { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new FavoritesListConfiguration());
             modelBuilder.ApplyConfiguration(new BuyerConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleConfiguration());
 

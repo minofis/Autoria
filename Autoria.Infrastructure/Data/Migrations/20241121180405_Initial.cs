@@ -22,7 +22,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                     Surname = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    CartId = table.Column<int>(type: "integer", nullable: false)
+                    FavoritesListId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +30,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
+                name: "FavoritesLists",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -39,9 +39,9 @@ namespace Autoria.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.PrimaryKey("PK_FavoritesLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_Buyers_BuyerId",
+                        name: "FK_FavoritesLists_Buyers_BuyerId",
                         column: x => x.BuyerId,
                         principalTable: "Buyers",
                         principalColumn: "Id",
@@ -60,31 +60,32 @@ namespace Autoria.Infrastructure.Data.Migrations
                     Year = table.Column<int>(type: "integer", nullable: false),
                     EngineCapacity = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    CartId = table.Column<int>(type: "integer", nullable: true),
-                    VehicleType = table.Column<string>(type: "character varying(21)", maxLength: 21, nullable: false),
+                    Mileage = table.Column<int>(type: "integer", nullable: true),
                     Category = table.Column<string>(type: "text", nullable: true),
-                    Mileage = table.Column<int>(type: "integer", nullable: true)
+                    LoadCapacity = table.Column<int>(type: "integer", nullable: true),
+                    EngineType = table.Column<string>(type: "text", nullable: true),
+                    FavoritesListId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
+                        name: "FK_Vehicles_FavoritesLists_FavoritesListId",
+                        column: x => x.FavoritesListId,
+                        principalTable: "FavoritesLists",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_BuyerId",
-                table: "Carts",
+                name: "IX_FavoritesLists_BuyerId",
+                table: "FavoritesLists",
                 column: "BuyerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_CartId",
+                name: "IX_Vehicles_FavoritesListId",
                 table: "Vehicles",
-                column: "CartId");
+                column: "FavoritesListId");
         }
 
         /// <inheritdoc />
@@ -94,7 +95,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Carts");
+                name: "FavoritesLists");
 
             migrationBuilder.DropTable(
                 name: "Buyers");

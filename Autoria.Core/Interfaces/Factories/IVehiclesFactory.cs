@@ -1,6 +1,6 @@
 using Autoria.Core.Entities;
 
-namespace Autoria.Core.Interfaces
+namespace Autoria.Core.Interfaces.Factories
 {
     public interface IVehiclesFactory
     {

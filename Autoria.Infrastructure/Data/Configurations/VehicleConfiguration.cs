@@ -8,12 +8,6 @@ namespace Autoria.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Vehicle> builder)
         {
-            builder
-            .HasDiscriminator<string>("VehicleType")
-            .HasValue<NewCar>("NewCar")
-            .HasValue<UsedCar>("UsedCar")
-            .HasValue<Motorcycle>("Motorcycle")
-            .HasValue<SpecialMachinery>("SpecialMachinery");
         }
     }
 }

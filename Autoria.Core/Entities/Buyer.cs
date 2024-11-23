@@ -7,7 +7,7 @@ namespace Autoria.Core.Entities
         public string Surname { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public Cart Cart { get; set; }
-        public int CartId { get; set; }
+        public FavoritesList FavoritesList { get; set; }
+        public int FavoritesListId { get; set; }
     }
 }

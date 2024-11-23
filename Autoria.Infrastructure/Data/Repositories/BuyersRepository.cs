@@ -44,15 +44,15 @@ namespace Autoria.Infrastructure.Data.Repositories
                 Phone = newBuyer.Phone
             };
 
-            var cart = new Cart{
+            var favoritesList = new FavoritesList{
                 Buyer = buyer,
                 BuyerId = buyer.Id
             };
             await _context.Buyers.AddAsync(buyer);
-            await _context.Carts.AddAsync(cart);
+            await _context.FavoritesLists.AddAsync(favoritesList);
             await _context.SaveChangesAsync();
 
-            buyer.CartId = cart.Id;
+            buyer.FavoritesListId = favoritesList.Id;
             await _context.SaveChangesAsync();
         }
     }

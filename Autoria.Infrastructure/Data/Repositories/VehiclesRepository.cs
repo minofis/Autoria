@@ -36,12 +36,8 @@ namespace Autoria.Infrastructure.Data.Repositories
         }
 
         public async Task CreateNewVehicleAsync(Vehicle newVehicle)
-        {
-            var vehicleFactory = new VehiclesFactory();
-
-            Vehicle vehicle = vehicleFactory.CreateVehicle(newVehicle);
-            
-            await _context.Vehicles.AddAsync(vehicle);
+        {   
+            await _context.Vehicles.AddAsync(newVehicle);
             await _context.SaveChangesAsync();
         }
     }

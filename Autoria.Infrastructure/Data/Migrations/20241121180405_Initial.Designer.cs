@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Autoria.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AutoriaDbContext))]
-    [Migration("20241103164505_Initial")]
+    [Migration("20241121180405_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,12 +33,12 @@ namespace Autoria.Infrastructure.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("FavoritesListId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,7 +61,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.ToTable("Buyers");
                 });
 
-            modelBuilder.Entity("Autoria.Core.Entities.Cart", b =>
+            modelBuilder.Entity("Autoria.Core.Entities.FavoritesList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,7 +77,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.HasIndex("BuyerId")
                         .IsUnique();
 
-                    b.ToTable("Carts");
+                    b.ToTable("FavoritesLists");
                 });
 
             modelBuilder.Entity("Autoria.Core.Entities.Vehicle", b =>
@@ -92,10 +92,22 @@ namespace Autoria.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
 
                     b.Property<int>("EngineCapacity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EngineType")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("FavoritesListId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("LoadCapacity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Mileage")
                         .HasColumnType("integer");
 
                     b.Property<string>("Model")
@@ -109,65 +121,21 @@ namespace Autoria.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("VehicleType")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("character varying(21)");
-
                     b.Property<int>("Year")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("FavoritesListId");
 
                     b.ToTable("Vehicles");
-
-                    b.HasDiscriminator<string>("VehicleType").HasValue("Vehicle");
-
-                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Autoria.Core.Entities.Motorcycle", b =>
-                {
-                    b.HasBaseType("Autoria.Core.Entities.Vehicle");
-
-                    b.HasDiscriminator().HasValue("Motorcycle");
-                });
-
-            modelBuilder.Entity("Autoria.Core.Entities.NewCar", b =>
-                {
-                    b.HasBaseType("Autoria.Core.Entities.Vehicle");
-
-                    b.HasDiscriminator().HasValue("NewCar");
-                });
-
-            modelBuilder.Entity("Autoria.Core.Entities.SpecialMachinery", b =>
-                {
-                    b.HasBaseType("Autoria.Core.Entities.Vehicle");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasDiscriminator().HasValue("SpecialMachinery");
-                });
-
-            modelBuilder.Entity("Autoria.Core.Entities.UsedCar", b =>
-                {
-                    b.HasBaseType("Autoria.Core.Entities.Vehicle");
-
-                    b.Property<int>("Mileage")
-                        .HasColumnType("integer");
-
-                    b.HasDiscriminator().HasValue("UsedCar");
-                });
-
-            modelBuilder.Entity("Autoria.Core.Entities.Cart", b =>
+            modelBuilder.Entity("Autoria.Core.Entities.FavoritesList", b =>
                 {
                     b.HasOne("Autoria.Core.Entities.Buyer", "Buyer")
-                        .WithOne("Cart")
-                        .HasForeignKey("Autoria.Core.Entities.Cart", "BuyerId")
+                        .WithOne("FavoritesList")
+                        .HasForeignKey("Autoria.Core.Entities.FavoritesList", "BuyerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -176,18 +144,18 @@ namespace Autoria.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Autoria.Core.Entities.Vehicle", b =>
                 {
-                    b.HasOne("Autoria.Core.Entities.Cart", null)
+                    b.HasOne("Autoria.Core.Entities.FavoritesList", null)
                         .WithMany("Vehicles")
-                        .HasForeignKey("CartId");
+                        .HasForeignKey("FavoritesListId");
                 });
 
             modelBuilder.Entity("Autoria.Core.Entities.Buyer", b =>
                 {
-                    b.Navigation("Cart")
+                    b.Navigation("FavoritesList")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Autoria.Core.Entities.Cart", b =>
+            modelBuilder.Entity("Autoria.Core.Entities.FavoritesList", b =>
                 {
                     b.Navigation("Vehicles");
                 });

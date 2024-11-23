@@ -8,6 +8,6 @@ namespace Autoria.API.Dtos.Response
         public string Surname { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public int CartId { get; set; }
+        public int FavoritesListId { get; set; }
     }
 }

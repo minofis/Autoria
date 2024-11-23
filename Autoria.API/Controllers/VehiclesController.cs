@@ -1,7 +1,7 @@
 using AutoMapper;
 using Autoria.API.Dtos.Request;
 using Autoria.Core.Entities;
-using Autoria.Core.Interfaces.Repositories;
+using Autoria.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autoria.API.Controllers
@@ -10,31 +10,49 @@ namespace Autoria.API.Controllers
     [Route("Autoria/[controller]")]
     public class VehiclesController : ControllerBase
     {
+        private readonly IVehiclesService _vehiclesService;
         private readonly IMapper _mapper;
-        private readonly IVehiclesRepository _vehiclesRepo;
 
-        public VehiclesController(IVehiclesRepository vehiclesRepo, IMapper mapper)
+        public VehiclesController(IVehiclesService vehiclesService, IMapper mapper)
         {
-            _vehiclesRepo = vehiclesRepo;
+            _vehiclesService = vehiclesService;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<List<Vehicle>> GetAllVehicles()
         {
-            return await _vehiclesRepo.GetAllVehiclesAsync();
+            return await _vehiclesService.GetAllVehiclesAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<Vehicle> GetVehicleById(int id){
-            return await _vehiclesRepo.GetVehicleByIdAsync(id);
+        public async Task<ActionResult<Vehicle>> GetVehicleById(int id){
+            try
+            {
+                var vehicle = await _vehiclesService.GetVehicleByIdAsync(id);
+                return vehicle;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {error = ex.Message});
+            }
+            
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task CreateNewVehicle(VehicleRequestDto vehicleDto)
+        public async Task<IActionResult> CreateNewVehicle(VehicleRequestDto vehicleDto)
         {
-            await _vehiclesRepo.CreateNewVehicleAsync(_mapper.Map<Vehicle>(vehicleDto));
+            try
+            {
+                var vehicle = _mapper.Map<Vehicle>(vehicleDto);
+                await _vehiclesService.CreateNewVehicleAsync(vehicle);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new {error = ex.Message});
+            }
         }
     }
 }

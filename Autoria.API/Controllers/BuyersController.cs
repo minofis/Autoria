@@ -2,7 +2,6 @@ using AutoMapper;
 using Autoria.API.Dtos.Request;
 using Autoria.API.Dtos.Response;
 using Autoria.Core.Entities;
-using Autoria.Core.Interfaces.Repositories;
 using Autoria.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,15 +27,30 @@ namespace Autoria.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<BuyerResponseDto> GetBuyerById(int id){
+        public async Task<ActionResult<BuyerResponseDto>> GetBuyerById(int id){
+            try
+            {
             var buyer = await _buyersService.GetBuyerByIdAsync(id);
             return _mapper.Map<BuyerResponseDto>(buyer);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new {error = ex.Message});
+            }
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task CreateBuyer(BuyerRequestDto buyerDto){
+        public async Task<IActionResult> CreateBuyer(BuyerRequestDto buyerDto){
+            try
+            {
             await _buyersService.CreateBuyerAsync(_mapper.Map<Buyer>(buyerDto));
+            return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new {error = ex.Message});
+            }
         }
     }
 }

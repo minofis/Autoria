@@ -1,6 +1,6 @@
 namespace Autoria.Core.Entities
 {
-    public class Cart : BaseEntity
+    public class FavoritesList : BaseEntity
     {
         public List<Vehicle> Vehicles { get; set; } = [];
         public Buyer Buyer { get; set; }
