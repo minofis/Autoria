@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Autoria.Infrastructure.Data.Migrations
+namespace Autoria.Infrastructure.Migrations
 {
     [DbContext(typeof(AutoriaDbContext))]
-    [Migration("20241121180405_Initial")]
+    [Migration("20241125200945_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.Property<int>("FavoritesListId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
 

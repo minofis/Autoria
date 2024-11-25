@@ -7,5 +7,6 @@ namespace Autoria.Core.Interfaces.Repositories
         Task<FavoritesList> GetFavoritesListByIdAsync(int favoritesListId);
         Task<List<FavoritesList>> GetAllFavoritesListsAsync();
         Task SaveChangesAsync();
+        Task DeleteFavoritesListByIdAsync(int favoritesListId);
     }
 }

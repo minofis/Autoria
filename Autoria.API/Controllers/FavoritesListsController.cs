@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Autoria.API.Controllers
 {
     [ApiController]
-    [Route("autoria/[controller]")]
+    [Route("Autoria/[controller]")]
     public class FavoritesListsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -39,12 +39,27 @@ namespace Autoria.API.Controllers
         }
 
         [HttpPost]
-        [Route("AddVehicle")]
-        public async Task<IActionResult> AddItemInFavoritesListByIdAsync(int favoritesListId, int vehicleId){
+        [Route("AddVehicle/{id}")]
+        public async Task<IActionResult> AddVehicleInFavoritesListById(int id, int vehicleId){
             try
             {
-                await _favoritesListsService.AddVehicleInFavoritesListByIdAsync(favoritesListId, vehicleId);
-                return Ok();
+                await _favoritesListsService.AddVehicleInFavoritesListByIdAsync(id, vehicleId);
+                return Ok("Vehicle is added in FavoritesList successfully");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new {error = ex.Message});
+            }
+        }
+
+        [HttpDelete]
+        [Route("RemoveVehicle/{id}")]
+        public async Task<IActionResult> RemoveVehicleFromFavoritesListById(int id, int vehicleId)
+        {
+            try
+            {
+                await _favoritesListsService.RemoveVehicleFromFavoritesListByIdAsync(id, vehicleId);
+                return Ok("Vehicle is removed from FavoritesList successfully");
             }
             catch(Exception ex)
             {

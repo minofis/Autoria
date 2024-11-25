@@ -20,6 +20,11 @@ namespace Autoria.BLL.Services
             await _vehiclesRepo.CreateNewVehicleAsync(vehicle);
         }
 
+        public async Task DeleteVehicleByIdAsync(int vehicleId)
+        {
+            await _vehiclesRepo.DeleteVehicleByIdAsync(vehicleId);
+        }
+
         public async Task<List<Vehicle>> GetAllVehiclesAsync()
         {
             return await _vehiclesRepo.GetAllVehiclesAsync();

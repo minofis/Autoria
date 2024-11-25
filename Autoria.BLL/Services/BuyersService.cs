@@ -7,13 +7,20 @@ namespace Autoria.BLL.Services
     public class BuyersService : IBuyersService
     {
         private readonly IBuyersRepository _buyersRepo;
-        public BuyersService(IBuyersRepository buyersRepo)
+        private readonly IFavoritesListsRepository _favoritesListsRepo;
+        public BuyersService(IBuyersRepository buyersRepo, IFavoritesListsRepository favoritesListsRepo)
         {
             _buyersRepo = buyersRepo;
+            _favoritesListsRepo = favoritesListsRepo;
         }
         public async Task CreateBuyerAsync(Buyer newBuyer)
         {
             await _buyersRepo.CreateBuyerAsync(newBuyer);
+        }
+
+        public async Task DeleteBuyerByIdAsync(int buyerId)
+        {
+            await _buyersRepo.DeleteBuyerByIdAsync(buyerId);
         }
 
         public async Task<List<Buyer>> GetAllBuyersAsync()

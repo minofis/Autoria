@@ -30,7 +30,7 @@ namespace Autoria.Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(v => v.Id == vehicleId);
             if (vehicle == null)
             {
-                throw new ArgumentException("Vehicle doesn't exist.", nameof(vehicleId));
+                throw new ArgumentException("Vehicle doesn't exist");
             }
             return vehicle;
         }
@@ -39,6 +39,26 @@ namespace Autoria.Infrastructure.Data.Repositories
         {   
             await _context.Vehicles.AddAsync(newVehicle);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteVehicleByIdAsync(int vehicleId)
+        {
+            if (vehicleId <= 0)
+            {
+                throw new ArgumentException("VehicleId must be a positive integer", nameof(vehicleId));
+            }
+
+            bool vehicleExist = await _context.Vehicles
+                .AnyAsync(v => v.Id == vehicleId);
+
+            if (!vehicleExist)
+            {
+                throw new ArgumentException("Vehicle doesn't exist");
+            }
+            
+            await _context.Vehicles
+                .Where(v => v.Id == vehicleId)
+                .ExecuteDeleteAsync();
         }
     }
 }

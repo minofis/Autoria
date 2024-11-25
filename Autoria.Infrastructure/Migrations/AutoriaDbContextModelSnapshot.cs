@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Autoria.Infrastructure.Data.Migrations
+namespace Autoria.Infrastructure.Migrations
 {
     [DbContext(typeof(AutoriaDbContext))]
     partial class AutoriaDbContextModelSnapshot : ModelSnapshot
@@ -37,7 +37,7 @@ namespace Autoria.Infrastructure.Data.Migrations
                     b.Property<int>("FavoritesListId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
 

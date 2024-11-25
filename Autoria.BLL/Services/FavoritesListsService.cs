@@ -17,7 +17,7 @@ namespace Autoria.BLL.Services
         {
             var favoritesList = await _favoritesListsRepo.GetFavoritesListByIdAsync(favoritesListId);
             var vehicle = await _vehiclesRepo.GetVehicleByIdAsync(vehicleId);
-
+            if (favoritesList.Vehicles.Any(v => v.Id == vehicle.Id)) throw new ArgumentException("Vehicle already exist");
             favoritesList.Vehicles.Add(vehicle);
             await _favoritesListsRepo.SaveChangesAsync();
         }
@@ -30,6 +30,15 @@ namespace Autoria.BLL.Services
         public async Task<FavoritesList> GetFavoritesListByIdAsync(int favoritesListId)
         {
             return await _favoritesListsRepo.GetFavoritesListByIdAsync(favoritesListId);
+        }
+
+        public async Task RemoveVehicleFromFavoritesListByIdAsync(int favoritesListId, int vehicleId)
+        {
+            var favoritesList = await _favoritesListsRepo.GetFavoritesListByIdAsync(favoritesListId);
+            var vehicle = await _vehiclesRepo.GetVehicleByIdAsync(vehicleId);
+            if (!favoritesList.Vehicles.Any(v => v.Id == vehicle.Id)) throw new ArgumentException("Vehicle doesn't exist");
+            favoritesList.Vehicles.Remove(vehicle);
+            await _favoritesListsRepo.SaveChangesAsync();
         }
     }
 }

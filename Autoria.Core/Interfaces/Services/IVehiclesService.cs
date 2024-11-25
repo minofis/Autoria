@@ -7,5 +7,6 @@ namespace Autoria.Core.Interfaces.Services
         Task<List<Vehicle>> GetAllVehiclesAsync();
         Task<Vehicle> GetVehicleByIdAsync(int id);
         Task CreateNewVehicleAsync(Vehicle newVehicle);
+        Task DeleteVehicleByIdAsync(int vehicleId);
     }
 }

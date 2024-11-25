@@ -7,5 +7,6 @@ namespace Autoria.Core.Interfaces.Repositories
         Task<List<Buyer>> GetAllBuyersAsync();
         Task<Buyer> GetBuyerByIdAsync(int buyerId);
         Task CreateBuyerAsync(Buyer buyer);
+        Task DeleteBuyerByIdAsync(int buyerId);
     }
 }

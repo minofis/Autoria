@@ -26,7 +26,8 @@ namespace Autoria.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Vehicle>> GetVehicleById(int id){
+        public async Task<ActionResult<Vehicle>> GetVehicleById(int id)
+        {
             try
             {
                 var vehicle = await _vehiclesService.GetVehicleByIdAsync(id);
@@ -47,7 +48,22 @@ namespace Autoria.API.Controllers
             {
                 var vehicle = _mapper.Map<Vehicle>(vehicleDto);
                 await _vehiclesService.CreateNewVehicleAsync(vehicle);
-                return Ok();
+                return Ok("Vehicle is created successfully");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new {error = ex.Message});
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> DeleteVehicleById(int id)
+        {
+            try
+            {
+                await _vehiclesService.DeleteVehicleByIdAsync(id);
+                return Ok("Vehicle is deleted successfully");
             }
             catch(Exception ex)
             {

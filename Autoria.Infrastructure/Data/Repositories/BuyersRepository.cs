@@ -21,16 +21,11 @@ namespace Autoria.Infrastructure.Data.Repositories
         public async Task<Buyer> GetBuyerByIdAsync(int buyerId){
 
             if(buyerId <= 0){
-                throw new ArgumentException("BuyerId must be a positive integer.", nameof(buyerId));
+                throw new ArgumentException("BuyerId must be a positive integer");
             }
 
             var buyer = await _context.Buyers
-                .FirstOrDefaultAsync(c => c.Id == buyerId);
-            
-            if(buyer == null){
-                throw new ArgumentException("Buyer doesn't exist.", nameof(buyerId));
-            }
-
+                .FirstOrDefaultAsync(b => b.Id == buyerId) ?? throw new ArgumentException("Buyer doesn't exist");
             return buyer;
         }
 
@@ -38,7 +33,7 @@ namespace Autoria.Infrastructure.Data.Repositories
         {
             var buyer = new Buyer{
                 Username = newBuyer.Username,
-                Name = newBuyer.Name,
+                FirstName = newBuyer.FirstName,
                 Surname = newBuyer.Surname,
                 Email = newBuyer.Email,
                 Phone = newBuyer.Phone
@@ -54,6 +49,26 @@ namespace Autoria.Infrastructure.Data.Repositories
 
             buyer.FavoritesListId = favoritesList.Id;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteBuyerByIdAsync(int buyerId)
+        {
+            if (buyerId <= 0)
+            {
+                throw new ArgumentException("BuyerId must be a positive integer");
+            }
+
+            bool buyerExist = await _context.Buyers
+                .AnyAsync(b => b.Id == buyerId);
+
+            if (!buyerExist)
+            {
+                throw new ArgumentException("Buyer doesn't exist");
+            }
+
+            await _context.Buyers
+                .Where(b => b.Id == buyerId)
+                .ExecuteDeleteAsync();
         }
     }
 }

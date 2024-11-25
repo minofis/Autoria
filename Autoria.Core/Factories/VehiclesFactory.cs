@@ -9,10 +9,8 @@ namespace Autoria.Core.Factories
         {
             if(newVehicle == null)
             {
-                throw new ArgumentException(nameof(newVehicle));
+                throw new ArgumentException("Vehicle can't be null", nameof(newVehicle));
             }
-
-            ValidateCommonFields(newVehicle);
 
             Vehicle vehicle;
 
@@ -76,59 +74,35 @@ namespace Autoria.Core.Factories
             return vehicle;
         }
 
-        private void ValidateCommonFields(Vehicle newVehicle){
-            if (string.IsNullOrEmpty(newVehicle.Brand)||
-                string.IsNullOrEmpty(newVehicle.Model)||
-                newVehicle.Year <= 0 ||
-                newVehicle.EngineCapacity <= 0 ||
-                newVehicle.Price == 0)
-            {
-                throw new ArgumentException("Fields Brand, Model, Year, EngineCapacity, Price can't be empty.");
-            }
+        private static void ValidateNewCar(Vehicle newVehicle)
+        {
+            if (newVehicle.Mileage > 0) throw new ArgumentException("Field Mileage must be 0 for a NewCar");
+            if (newVehicle.LoadCapacity > 0) throw new ArgumentException("Field LoadCapacity must be 0 for a NewCar");
+            if (!string.IsNullOrEmpty(newVehicle.EngineType)) throw new ArgumentException("Field EngineType must be empty for a NewCar");
+            if (!string.IsNullOrEmpty(newVehicle.Category)) throw new ArgumentException("Field Category must be empty for a NewCar");
+        }
+        private static void ValidateUsedCar(Vehicle newVehicle)
+        {
+            if (newVehicle.LoadCapacity > 0) throw new ArgumentException("Field LoadCapacity must be 0 for a UsedCar");
+            if (!string.IsNullOrEmpty(newVehicle.EngineType)) throw new ArgumentException("Field EngineType must be empty for a UsedCar");
+            if (!string.IsNullOrEmpty(newVehicle.Category)) throw new ArgumentException("Field Category must be empty for a UsedCar");
+            if(newVehicle.Mileage == 0) throw new ArgumentException("Mileage field is required for UsedCar");
         }
 
-        private void ValidateNewCar(Vehicle newVehicle){
-            if (newVehicle.Mileage > 0 ||
-                    newVehicle.LoadCapacity > 0 ||
-                    !string.IsNullOrEmpty(newVehicle.EngineType) || 
-                    !string.IsNullOrEmpty(newVehicle.Category))
-                {
-                    throw new ArgumentException("Fields Mileage, EngineType, Category, LoadCapacity must be empty for a NewCar.");
-                }
-        }
-        private void ValidateUsedCar(Vehicle newVehicle){
-            if (newVehicle.LoadCapacity > 0 ||
-                    !string.IsNullOrEmpty(newVehicle.EngineType) || 
-                    !string.IsNullOrEmpty(newVehicle.Category))
-                {
-                    throw new ArgumentException("Fields EngineType, Category, LoadCapacity must be empty for a UsedCar.");
-                } else if(newVehicle.Mileage == 0){
-                    throw new ArgumentException("Mileage field can't equals 0 for a UsedCar.");
-                }
+        private static void ValidateMotorcycle(Vehicle newVehicle)
+        {
+            if (newVehicle.LoadCapacity > 0) throw new ArgumentException("Field LoadCapacity must be 0 for a Motorcycle");
+            if (!string.IsNullOrEmpty(newVehicle.Category)) throw new ArgumentException("Field Category must be empty for a Motorcycle");
+            if (newVehicle.Mileage > 0) throw new ArgumentException("Field Mileage must be 0 for a Motorcycle");
+            if(string.IsNullOrEmpty(newVehicle.EngineType)) throw new ArgumentException("EngineType field is required for Motorcycle");
         }
 
-        private void ValidateMotorcycle(Vehicle newVehicle){
-            if (newVehicle.Mileage > 0 ||
-                    newVehicle.LoadCapacity > 0 ||
-                    !string.IsNullOrEmpty(newVehicle.EngineType) || 
-                    !string.IsNullOrEmpty(newVehicle.Category))
-                {
-                    throw new ArgumentException("Fields Mileage, Category, LoadCapacity must be empty for a Motorcycle.");
-                } else if(string.IsNullOrEmpty(newVehicle.EngineType)){
-                    throw new ArgumentException("EngineType field can't be empty for a Motorcycle.");
-                }
-        }
-
-        private void ValidateSpecialMachinery(Vehicle newVehicle){
-            if (newVehicle.Mileage > 0 ||
-                    !string.IsNullOrEmpty(newVehicle.EngineType))
-                {
-                    throw new ArgumentException("Fields Mileage, EngineType must be empty for a SpecialMachinery.");
-                } else if(string.IsNullOrEmpty(newVehicle.Category)){
-                    throw new ArgumentException("Category field can't be empty for a SpecialMachinery.");
-                } else if(newVehicle.LoadCapacity == 0 ){
-                    throw new ArgumentException("LoadCapacity field can't equals 0 for a SpecialMachinery.");
-                }
+        private static void ValidateSpecialMachinery(Vehicle newVehicle)
+        {
+            if (newVehicle.Mileage > 0) throw new ArgumentException("Field Mileage must be 0 for a SpecialMachinery");
+            if (!string.IsNullOrEmpty(newVehicle.EngineType)) throw new ArgumentException("Field EngineType must be empty for a SpecialMachinery");
+            if(string.IsNullOrEmpty(newVehicle.Category)) throw new ArgumentException("Category field is required for SpecialMachinery.");
+            if(newVehicle.LoadCapacity == 0 ) throw new ArgumentException("LoadCapacity field is required for SpecialMachinery");
         }
     }
 }

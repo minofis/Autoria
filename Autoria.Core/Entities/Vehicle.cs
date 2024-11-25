@@ -9,7 +9,7 @@ namespace Autoria.Core.Entities
         public int EngineCapacity { get; set; }
         public decimal Price { get; set; }
 
-        //UsedCar fieldsf
+        //UsedCar fields
         public int? Mileage { get; set; } = null;
 
         //SpecialMachinery fields
