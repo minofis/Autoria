@@ -12,33 +12,32 @@ namespace Autoria.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<List<Buyer>> GetAllBuyersAsync(){
+        public async Task<List<Buyer>> GetAllBuyersAsync()
+        {
+            // Getting all buyers
             return await _context.Buyers
                 .AsNoTracking()
                 .ToListAsync();
         }
 
-        public async Task<Buyer> GetBuyerByIdAsync(int buyerId){
+        public async Task<Buyer> GetBuyerByIdAsync(int buyerId)
+        {
+            // Check if buyerId is 0
+            if(buyerId <= 0) throw new ArgumentException("BuyerId must be a positive integer");
 
-            if(buyerId <= 0){
-                throw new ArgumentException("BuyerId must be a positive integer");
-            }
-
-            var buyer = await _context.Buyers
-                .FirstOrDefaultAsync(b => b.Id == buyerId) ?? throw new ArgumentException("Buyer doesn't exist");
-            return buyer;
+            // Getting buyer by id
+            return await _context.Buyers
+                .FirstOrDefaultAsync(b => b.Id == buyerId) 
+                    // Check is buyer exists
+                    ?? throw new ArgumentException("Buyer doesn't exists");
         }
 
         public async Task CreateBuyerAsync(Buyer newBuyer)
         {
-            var buyer = new Buyer{
-                Username = newBuyer.Username,
-                FirstName = newBuyer.FirstName,
-                Surname = newBuyer.Surname,
-                Email = newBuyer.Email,
-                Phone = newBuyer.Phone
-            };
+            // Creating new buyer
+            var buyer = Buyer.CreateBuyer(newBuyer);
 
+            // Creating new favorites list
             var favoritesList = new FavoritesList{
                 Buyer = buyer,
                 BuyerId = buyer.Id
@@ -63,7 +62,7 @@ namespace Autoria.Infrastructure.Data.Repositories
 
             if (!buyerExist)
             {
-                throw new ArgumentException("Buyer doesn't exist");
+                throw new ArgumentException("Buyer doesn't exists");
             }
 
             await _context.Buyers

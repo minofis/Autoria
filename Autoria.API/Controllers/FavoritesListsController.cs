@@ -19,35 +19,46 @@ namespace Autoria.API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<FavoritesListResponseDto>> GetAllFavoritesLists(){
+        public async Task<List<FavoritesListResponseDto>> GetAllFavoritesLists()
+        {
+            // Getting all favorites lists
             var favoritesLists = await _favoritesListsService.GetAllFavoritesListsAsync();
-            var favoritesListResponseDtos = favoritesLists.Select(favoritesList => _mapper.Map<FavoritesListResponseDto>(favoritesList)).ToList();
-            return favoritesListResponseDtos;
+
+            // Mapping all favorites lists to FavoritesListResponseDto
+            return favoritesLists.Select(_mapper.Map<FavoritesListResponseDto>).ToList();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<FavoritesListResponseDto>> GetFavoritesListById(int id){
+        public async Task<ActionResult<FavoritesListResponseDto>> GetFavoritesListById(int id)
+        {
             try
             {
+                // Getting favorites list by id
                 var favoritesList = await _favoritesListsService.GetFavoritesListByIdAsync(id);
+
+                // Mapping a favorites list to FavoritesListResponseDto
                 return _mapper.Map<FavoritesListResponseDto>(favoritesList);
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }
 
         [HttpPost]
         [Route("AddVehicle/{id}")]
-        public async Task<IActionResult> AddVehicleInFavoritesListById(int id, int vehicleId){
+        public async Task<IActionResult> AddVehicleInFavoritesListById(int id, int vehicleId)
+        {
             try
             {
+                // Adding vehicle in favorites list by id
                 await _favoritesListsService.AddVehicleInFavoritesListByIdAsync(id, vehicleId);
                 return Ok("Vehicle is added in FavoritesList successfully");
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }
@@ -58,11 +69,13 @@ namespace Autoria.API.Controllers
         {
             try
             {
+                // Removing vehicle from favorites list by id
                 await _favoritesListsService.RemoveVehicleFromFavoritesListByIdAsync(id, vehicleId);
                 return Ok("Vehicle is removed from FavoritesList successfully");
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }

@@ -9,5 +9,16 @@ namespace Autoria.Core.Entities
         public string Email { get; set; } = string.Empty;
         public FavoritesList FavoritesList { get; set; }
         public int FavoritesListId { get; set; }
+
+        public static Buyer CreateBuyer(Buyer newBuyer)
+        {
+            return new Buyer{
+                Username = newBuyer.Username,
+                FirstName = newBuyer.FirstName,
+                Surname = newBuyer.Surname,
+                Email = newBuyer.Email,
+                Phone = newBuyer.Phone,
+            };
+        }
     }
 }

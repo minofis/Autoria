@@ -22,9 +22,11 @@ namespace Autoria.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BuyerResponseDto>>> GetAllBuyers()
         {
+            // Getting all buyers
             var buyers = await _buyersService.GetAllBuyersAsync();
-            var buyerResponseDtos = buyers.Select(_mapper.Map<BuyerResponseDto>).ToList();
-            return buyerResponseDtos;
+
+            // Mapping all buyers to BuyerResponseDto
+            return buyers.Select(_mapper.Map<BuyerResponseDto>).ToList();
         }
 
         [HttpGet("{id}")]
@@ -32,11 +34,15 @@ namespace Autoria.API.Controllers
         {
             try
             {
+                // Getting buyer by id
                 var buyer = await _buyersService.GetBuyerByIdAsync(id);
+
+                // Mapping a buyer to BuyerResponseDto
                 return _mapper.Map<BuyerResponseDto>(buyer);
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }
@@ -47,11 +53,15 @@ namespace Autoria.API.Controllers
         {
             try
             {
-            await _buyersService.CreateBuyerAsync(_mapper.Map<Buyer>(buyerDto));
-            return Ok("Buyer is created successfully");
+                // Creating a new buyer
+                await _buyersService.CreateBuyerAsync(
+                    // Mapping a BuyerRequestDto to buyer
+                    _mapper.Map<Buyer>(buyerDto));
+                return Ok("Buyer is created successfully");
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }
@@ -62,11 +72,13 @@ namespace Autoria.API.Controllers
         {
             try
             {
+                // Deleting buyer by id
                 await _buyersService.DeleteBuyerByIdAsync(id);
                 return Ok("Buyer is deleted successfully");
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }

@@ -22,6 +22,7 @@ namespace Autoria.API.Controllers
         [HttpGet]
         public async Task<List<Vehicle>> GetAllVehicles()
         {
+            // Getting all vehicles
             return await _vehiclesService.GetAllVehiclesAsync();
         }
 
@@ -30,14 +31,14 @@ namespace Autoria.API.Controllers
         {
             try
             {
-                var vehicle = await _vehiclesService.GetVehicleByIdAsync(id);
-                return vehicle;
+                // Getting a vehicle by id
+                return await _vehiclesService.GetVehicleByIdAsync(id);
             }
             catch (Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
-            
         }
 
         [HttpPost]
@@ -45,13 +46,15 @@ namespace Autoria.API.Controllers
         public async Task<IActionResult> CreateNewVehicle(VehicleRequestDto vehicleDto)
         {
             try
-            {
-                var vehicle = _mapper.Map<Vehicle>(vehicleDto);
-                await _vehiclesService.CreateNewVehicleAsync(vehicle);
+            {   // Creating a new vehicle
+                await _vehiclesService.CreateNewVehicleAsync(
+                    // Mapping a VehicleRequestDto to vehicle
+                    _mapper.Map<Vehicle>(vehicleDto));
                 return Ok("Vehicle is created successfully");
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }
@@ -62,11 +65,13 @@ namespace Autoria.API.Controllers
         {
             try
             {
+                // Deleting a vehicle by id
                 await _vehiclesService.DeleteVehicleByIdAsync(id);
                 return Ok("Vehicle is deleted successfully");
             }
             catch(Exception ex)
             {
+                // Error output
                 return BadRequest(new {error = ex.Message});
             }
         }
