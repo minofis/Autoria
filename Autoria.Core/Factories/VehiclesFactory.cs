@@ -3,8 +3,9 @@ using Autoria.Core.Interfaces.Factories;
 
 namespace Autoria.Core.Factories
 {
-    public class VehiclesFactory : IVehiclesFactory
+    public class VehiclesFactory /*: IVehiclesFactory*/
     {
+        /*
         public Vehicle CreateVehicle(Vehicle newVehicle)
         {
             if(newVehicle == null)
@@ -14,19 +15,11 @@ namespace Autoria.Core.Factories
 
             Vehicle vehicle;
 
-            switch (newVehicle.Type)
+            switch (newVehicle)
             {
                 case "NewCar":
                 ValidateNewCar(newVehicle);
-                vehicle = new Vehicle
-                {
-                    Type = newVehicle.Type,
-                    Brand = newVehicle.Brand,
-                    Model = newVehicle.Model,
-                    Year = newVehicle.Year,
-                    EngineCapacity = newVehicle.EngineCapacity,
-                    Price = newVehicle.Price
-                };
+
                 break;
                 case "UsedCar": 
                 ValidateUsedCar(newVehicle);
@@ -104,5 +97,6 @@ namespace Autoria.Core.Factories
             if(string.IsNullOrEmpty(newVehicle.Category)) throw new ArgumentException("Category field is required for SpecialMachinery.");
             if(newVehicle.LoadCapacity == 0 ) throw new ArgumentException("LoadCapacity field is required for SpecialMachinery");
         }
+        */
     }
 }

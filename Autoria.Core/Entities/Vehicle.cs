@@ -9,14 +9,17 @@ namespace Autoria.Core.Entities
         public int EngineCapacity { get; set; }
         public decimal Price { get; set; }
 
-        //UsedCar fields
-        public int? Mileage { get; set; } = null;
-
-        //SpecialMachinery fields
-        public string? Category { get; set; } = null;
-        public int? LoadCapacity { get; set; } = null;
-
-        //Motorcycle fields
-        public string? EngineType { get; set; } = null;
+        public virtual Vehicle Create(Vehicle newVehicle)
+        {
+            return new Vehicle
+                {
+                    Type = newVehicle.Type,
+                    Brand = newVehicle.Brand,
+                    Model = newVehicle.Model,
+                    Year = newVehicle.Year,
+                    EngineCapacity = newVehicle.EngineCapacity,
+                    Price = newVehicle.Price,
+                };
+        }
     }
 }

@@ -8,7 +8,10 @@ namespace Autoria.API.Helpers.AutoMapper
     {
         public VehicleProfile()
         {
-            CreateMap<VehicleRequestDto, Vehicle>();
+            CreateMap<VehicleRequestDto, NewCar>();
+            CreateMap<VehicleRequestDto, UsedCar>();
+            CreateMap<VehicleRequestDto, Motorcycle>();
+            CreateMap<VehicleRequestDto, SpecialMachinery>();
         }
     }
 }

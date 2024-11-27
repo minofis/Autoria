@@ -17,7 +17,8 @@ namespace Autoria.BLL.Services
         public async Task CreateNewVehicleAsync(Vehicle newVehicle)
         {
             // Creating a new vehicle in VehiclesFactory
-            var vehicle = _vehiclesFactory.CreateVehicle(newVehicle);
+            UsedCar vehicle;
+            vehicle.Create(newVehicle);
 
             // Creating a vehicle
             await _vehiclesRepo.CreateNewVehicleAsync(vehicle);

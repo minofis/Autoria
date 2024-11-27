@@ -46,10 +46,27 @@ namespace Autoria.API.Controllers
         public async Task<IActionResult> CreateNewVehicle(VehicleRequestDto vehicleDto)
         {
             try
-            {   // Creating a new vehicle
-                await _vehiclesService.CreateNewVehicleAsync(
-                    // Mapping a VehicleRequestDto to vehicle
-                    _mapper.Map<Vehicle>(vehicleDto));
+            {   
+                Vehicle newVehicle;
+                // Mapping a VehicleRequestDto to Vehicle
+                switch (vehicleDto.Type)
+                {
+                    case "NewCar":
+                        newVehicle = _mapper.Map<NewCar>(vehicleDto);
+                        break;
+                    case "Motorcycle":
+                        newVehicle = _mapper.Map<Motorcycle>(vehicleDto);
+                        break;
+                    case "UsedCar":
+                        newVehicle = _mapper.Map<UsedCar>(vehicleDto);
+                        break;
+                    case "SpecialMachinery":
+                        newVehicle = _mapper.Map<SpecialMachinery>(vehicleDto);
+                        break;
+                    default: return BadRequest(new {error = "Unsupported vehicle type"});
+                }
+                // Creating a new vehicle
+                await _vehiclesService.CreateNewVehicleAsync(newVehicle);
                 return Ok("Vehicle is created successfully");
             }
             catch(Exception ex)
